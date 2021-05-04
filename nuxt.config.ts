@@ -72,7 +72,11 @@ const nuxtConfig: Configuration = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend() {},
+    transpile: [
+      /typed-vuex/,
+    ],
+    extend (config, ctx) {
+    }
   },
 }
 export default nuxtConfig

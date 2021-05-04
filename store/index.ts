@@ -2,7 +2,7 @@ import { getAccessorType } from 'typed-vuex'
 
 // 例えば、store/age.ts のようなサブモジュールが存在する場合、
 // ここで import しておきます。
-import * as auth from '~/store/auth'
+import * as auth from '../store/auth'
 
 // ここでは、state, getters, mutations, actions の記法は省略しています。
 // 記法については、後ほど記述する store/age.ts を参照してください。
