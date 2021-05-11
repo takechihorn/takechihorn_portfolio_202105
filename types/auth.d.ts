@@ -7,9 +7,8 @@ declare module 'vue/types/vue' {
   }
 }
 
-// store用
 declare module 'vuex' {
   interface Store<S> {
-    readonly $logger: Logger
+    readonly $auth: AuthService
   }
 }

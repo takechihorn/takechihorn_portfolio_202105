@@ -19,7 +19,9 @@ const nuxtConfig: Configuration = {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '~/plugins/amplify.ts',mode:'client'}
+    { src: '~/plugins/amplify.ts', mode: 'client' },
+    '~/plugins/auth.ts',
+    '~/plugins/composition-api.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -31,6 +33,7 @@ const nuxtConfig: Configuration = {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'nuxt-typed-vuex',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -55,7 +58,7 @@ const nuxtConfig: Configuration = {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -72,11 +75,8 @@ const nuxtConfig: Configuration = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [
-      /typed-vuex/,
-    ],
-    extend (config, ctx) {
-    }
+    transpile: [/typed-vuex/],
+    extend(config, ctx) {},
   },
 }
 export default nuxtConfig
