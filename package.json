@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts",
+    "dev": "PORT=3335 nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
@@ -15,16 +15,17 @@
     "@aws-amplify/ui-vue": "^1.0.7",
     "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/composition-api": "^0.23.4",
     "@nuxtjs/pwa": "^3.3.5",
     "@vue/composition-api": "*",
-    "aws-amplify": "^3.3.27",
+    "aws-amplify": "^4.0.2",
     "aws-amplify-vue": "^2.1.5",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
     "nuxt-typed-vuex": "^0.2.0"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.15.3",
+    "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",

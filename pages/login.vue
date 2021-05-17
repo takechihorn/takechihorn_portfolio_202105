@@ -2,7 +2,8 @@
   <div id="app">
     <v-app>
       <v-dialog v-model="dialog" persistent max-width="500px" min-width="360px">
-        <div v-if="!$accessor.auth.isAuthenticated">
+        <div v-if="true">
+          <!-- <div v-if="!$store.state.auth.isAuthenticated"> -->
           <v-tabs
             v-model="tab"
             show-arrows
@@ -13,7 +14,7 @@
           >
             <v-tabs-slider color="purple darken-4"></v-tabs-slider>
             <v-tab>
-              <v-icon large color="white">mdi-login</v-icon>
+              <v-icon large>mdi-login</v-icon>
               <div class="caption py-1">Login</div>
             </v-tab>
             <v-tab-item>
@@ -71,7 +72,7 @@
           </v-tabs>
         </div>
         <div v-else>
-          You're logged in as {{ $auth.email }}.
+          You're logged in as {{}}.
           <v-btn
             x-large
             block
@@ -87,60 +88,66 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from '@vue/composition-api'
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  useRouter,
+  useStore,
+  ref,
+} from '@nuxtjs/composition-api'
 export default defineComponent({
-  setup(x, ctx) {
-    const form = reactive<object>({
-      email: '',
-      password: '',
+  setup() {
+    const state = reactive({
+      form: {
+        email: '',
+        password: '',
+      },
+      dialog: true,
+      tab: 0,
+      valid: true,
+      EmailRules: [
+        (v) => !!v || 'Required',
+        (v) => (v && v.length >= 8) || 'Min 8 characters',
+      ],
+
+      show1: false,
+      rules: {
+        required: (value) => !!value || 'Required.',
+        min: (v) => (v && v.length >= 8) || 'Min 8 characters',
+      },
     })
-    const dialog = ref<boolean>(true)
-    const tab = ref<number>(0)
-    const valid = ref<boolean>(true)
-    const EmailRules: Array<(v: any) => any> = [
-      (v) => !!v || 'Required',
-      (v) => (v && v.length >= 8) || 'Min 8 characters',
-    ]
-    const show1 = ref<boolean>(false)
-    const rules = {
-      required: (value) => !!value || 'Required.',
-      min: (v) => (v && v.length >= 8) || 'Min 8 characters',
-    }
-    const passwordMatch = computed(
-      () => form.password === this.verify || 'Password must match'
-    )
+    const store = useStore()
+    const loginForm: any = ref()
+    const router = useRouter()
     const login = async () => {
       try {
-        await ctx.$accessor.dispatch('auth/login', form)
-        this.$router.push('/')
+        await store.dispatch('auth/login', state.form)
+        router.push('/')
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log({ error })
       }
     }
-    const validate = {
-      // if (this.$refs.loginForm.validate()) {
-      //   // submit form to server/API here...
-      // }
+    const validate = () => {
+      if (loginForm.value.validate()) {
+        // submit form to server/API here...
+      }
     }
-    // const reset = {
-    //   this.app.$refs.form.reset()
-    // }
-    // const resetValidation =
-    //   this.app.$refs.form.resetValidation()
-
+    const reset = () => {
+      loginForm.value.reset()
+    }
+    const resetValidation = () => {
+      loginForm.value.resetValidation()
+    }
     return {
-      form,
-      dialog,
-      tab,
-      valid,
-      EmailRules,
-      show1,
-      rules,
-      passwordMatch,
+      ...toRefs(state),
+      // passwordMatch,
       login,
       validate,
-      // reset,
-      // resetValidation
+      reset,
+      resetValidation,
+      loginForm,
     }
   },
 })

@@ -1,20 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-takechiportfolio-dev-114945-authRole",
-      "UnauthRoleArn": "arn:aws:iam::213330998827:role/amplify-takechiportfolio-dev-114945-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::213330998827:role/amplify-takechiportfolio-dev-114945-authRole",
+      "AuthRoleName": "amplify-takechiportfolio-dev-170826-authRole",
+      "UnauthRoleArn": "arn:aws:iam::213330998827:role/amplify-takechiportfolio-dev-170826-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::213330998827:role/amplify-takechiportfolio-dev-170826-authRole",
       "Region": "ap-northeast-1",
-      "DeploymentBucketName": "amplify-takechiportfolio-dev-114945-deployment",
-      "UnauthRoleName": "amplify-takechiportfolio-dev-114945-unauthRole",
-      "StackName": "amplify-takechiportfolio-dev-114945",
-      "StackId": "arn:aws:cloudformation:ap-northeast-1:213330998827:stack/amplify-takechiportfolio-dev-114945/649f0b10-ac83-11eb-ab9c-06766cd58472",
-      "AmplifyAppId": "dxuj8qwwjsyiy"
-    },
-    "categories": {
-      "auth": {
-        "takechiportfoliocbc78be7": {}
-      }
+      "DeploymentBucketName": "amplify-takechiportfolio-dev-170826-deployment",
+      "UnauthRoleName": "amplify-takechiportfolio-dev-170826-unauthRole",
+      "StackName": "amplify-takechiportfolio-dev-170826",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:213330998827:stack/amplify-takechiportfolio-dev-170826/11006030-b6e7-11eb-a891-0a027932b355",
+      "AmplifyAppId": "d1ttfp4j4nzy4q"
     }
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <div id="app">
     <v-app>
@@ -22,7 +21,7 @@
                 <v-card-text>
                   <v-form
                     v-if="step == steps.register"
-                    ref="loginForm"
+                    ref="signupForm"
                     v-model="valid"
                     lazy-validation
                     @submit.prevent="register"
@@ -68,7 +67,7 @@
                   </v-form>
                   <v-form
                     v-else
-                    ref="loginForm"
+                    ref="signupForm"
                     v-model="valid"
                     lazy-validation
                     @submit.prevent="confirm"
@@ -116,77 +115,104 @@
   </div>
 </template>
 
-<script>
-// eslint-disable-next-line no-unused-vars
+<script lang="ts">
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  // computed,
+  useContext,
+  useStore,
+  onMounted,
+  ref,
+} from '@nuxtjs/composition-api'
 const steps = {
   register: 'REGISTER',
   confirm: 'CONFIRM',
 }
-export default {
-  data: () => ({
-    steps: { ...steps },
-    step: steps.register,
-    registerForm: {
-      email: '',
-      password: '',
-      errors: [],
-    },
-    confirmForm: {
-      email: '',
-      code: '',
-    },
-    dialog: true,
-    tab: 0,
-    tabs: [{ name: 'Signup', icon: 'mdi-account-plus' }],
-    valid: true,
-    EmailRules: [
-      (v) => !!v || 'Required',
-      (v) => (v && v.length >= 8) || 'Min 8 characters',
-    ],
+export default defineComponent({
+  setup() {
+    const state = reactive({
+      steps: { ...steps },
+      step: steps.register,
+      registerForm: {
+        email: '',
+        password: '',
+        errors: [],
+      },
+      confirmForm: {
+        email: '',
+        code: '',
+      },
+      dialog: true,
+      tab: 0,
+      tabs: [{ name: 'Signup', icon: 'mdi-account-plus' }],
+      valid: true,
+      EmailRules: [
+        (v) => !!v || 'Required',
+        (v) => (v && v.length >= 8) || 'Min 8 characters',
+      ],
 
-    show1: false,
-    rules: {
-      required: (value) => !!value || 'Required.',
-      min: (v) => (v && v.length >= 8) || 'Min 8 characters',
-    },
-  }),
-  computed: {
-    passwordMatch() {
-      return () => this.password === this.verify || 'Password must match'
-    },
-  },
-  methods: {
-    async register() {
+      show1: false,
+      rules: {
+        required: (value) => !!value || 'Required.',
+        min: (v) => (v && v.length >= 8) || 'Min 8 characters',
+      },
+    })
+    const {
+      app: { router },
+    } = useContext()
+    const store = useStore()
+    const signupForm: any = ref()
+    onMounted(() => {
+      // eslint-disable-next-line no-unused-expressions
+      console.log(signupForm.value) // DOMノードが取得できる
+    })
+    // const passwordMatch = computed(() => {
+    //   return () =>
+    //     state.registerForm.password === this.verify || 'Password must match'
+    // })
+    const register = async () => {
       try {
-        await this.$store.dispatch('auth/register', this.registerForm)
-        this.confirmForm.email = this.registerForm.email
-        this.step = this.steps.confirm
+        await store.dispatch('auth/register', state.registerForm)
+        state.confirmForm.email = state.registerForm.email
+        state.step = state.steps.confirm
       } catch (error) {
         console.log({ error })
       }
-    },
-    async confirm() {
+    }
+    const confirm = async () => {
       try {
-        await this.$store.dispatch('auth/confirmRegistration', this.confirmForm)
-        await this.$store.dispatch('auth/login', this.registerForm)
-        this.$router.push('/')
+        await store.dispatch('auth/confirmRegistration', state.confirmForm)
+        await store.dispatch('auth/login', state.registerForm)
+        router?.push('/')
       } catch (error) {
         console.log({ error })
       }
-    },
-    validate() {
-      if (this.$refs.loginForm.validate()) {
+    }
+    const validate = () => {
+      if (signupForm.value.validate()) {
         // submit form to server/API here...
       }
-    },
-    reset() {
-      this.$refs.form.reset()
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation()
-    },
+    }
+    const reset = () => {
+      signupForm.value.reset()
+    }
+    const resetValidation = () => {
+      signupForm.value.resetValidation()
+    }
+    return {
+      ...toRefs(state),
+      // passwordMatch,
+      validate,
+      reset,
+      resetValidation,
+      register,
+      confirm,
+      signupForm,
+    }
   },
-}
+})
 </script>
 
 <style></style>

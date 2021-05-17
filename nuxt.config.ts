@@ -21,7 +21,6 @@ const nuxtConfig: Configuration = {
   plugins: [
     { src: '~/plugins/amplify.ts', mode: 'client' },
     '~/plugins/auth.ts',
-    '~/plugins/composition-api.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -34,6 +33,7 @@ const nuxtConfig: Configuration = {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     'nuxt-typed-vuex',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -76,7 +76,6 @@ const nuxtConfig: Configuration = {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/typed-vuex/],
-    extend(config, ctx) {},
   },
 }
 export default nuxtConfig
